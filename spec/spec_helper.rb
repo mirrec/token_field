@@ -29,6 +29,7 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   config.include Capybara::DSL
+  config.include TokenField::Capybara::Dsl
 
   config.before(:each) do
     DatabaseCleaner.strategy = :truncation

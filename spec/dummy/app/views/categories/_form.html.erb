@@ -5,7 +5,7 @@
   </p>
   <p>
     <%= f.label :parent_id %>
-    <%= f.token_field :parent_id, :model => :category, :token_url => "/categories/token.json" %>
+    <%= f.token_field :parent_id, :model => :category, :token_url => token_categories_path %>
   </p>
   <%= f.submit %>
 <% end %>

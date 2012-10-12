@@ -1,40 +1,38 @@
-module TokenFieldHelper
-
-  def self.included(base)
-    ActionView::Helpers::FormBuilder.instance_eval do
-      include FormBuilderMethods
-    end
-  end
-
-  module FormBuilderMethods
+module TokenField
+  module FormBuilder
     include ActionView::Helpers
 
     #
-    # helper na vykreslenie token inputu, pre mapovanie belongs_to aj has_many
+    # form_for helper for token input with jquery token input plugin
+    # for has_many and belongs_to association
     #
     # http://railscasts.com/episodes/258-token-fields
     # http://loopj.com/jquery-tokeninput/
     #
-    # helper vykresli standardny textovy helper, spolocne s javascriptovym kodom, ktory automaticky aktivuje field ako token input
+    # helper will render standard text field input with javascript.
+    # javascript will change standard input to token field input
     #
-    # predpoklady
+    # EXAMPLE
     #
     # class Category < ActiveRecord::Base
+    #   attr_accessible :name, :parent_id, :product_ids
     #   has_many :products
     #
-    #   # metoda, ktora sa pouziva pri tvorbe tokenov, jak na stranke upravy tak pri ajaxovom volani
+    #   # method for converting array of categories to array of hashes in format that token input accepts
     #   def self.token_json(items)
     #     items.map{|i| {:id => i.id, :name => i.name} }
     #   end
     # end
     #
     # class Product < ActiveRecord::Base
+    #   attr_accessible :name, :category_id
+    #
     #   belongs_to :category
     # end
     #
-    # class Admin::CategoriesController < Admin::AdminController
+    # class CategoriesController < ApplicationController
     #
-    #   # metoda na ajaxovy autocomple pre token, odpoved je cez json
+    #   # action for autocomplete
     #   def token
     #     @categories = Category.where("categories.name like ?", "%#{params[:q]}%")
     #     respond_to do |format|
@@ -45,47 +43,52 @@ module TokenFieldHelper
     #   # rest of the class
     # end
     #
+    # then in routes add route for token ajax call
+    #
     # MyApplication::Application.routes.draw do
-    #   # mapovanie ajaxoveho ovlania token na admin controller categories
-    #   # dolezite je aby tento riadok bol PRED resources :categories
-    #   match "admin/categories/token.json" => 'admin/categories#token'
+    #   resources :categories do
+    #     collection do
+    #       get :token # route for token -> token_categories_path
+    #     end
+    #   end
     # end
     #
-    # vo view potom zavolame
-    # zakladny token input, kde bude mozne zadat len jeden prvok z modelu Category
+    # then in view we call token_field
+    # token_field input will be default expects, that Category model exists
     # <%= form_for @product do |f| %>
     #   <%= f.token_field :category_id %>
     # <% end %>
     #
-    # ine nastavenia:
+    # possible options:
     #
-    # ak by bola asociacia nastavena takto
+    # in case the association roles where given like this
     #
     # class Product < ActiveRecord::Base
     #    belongs_to :cat, :class_name => 'Category', :foreign_key => :cat_id
     # end
     #
-    # je potrebne pridat nazov asociacie, ktory sa ma pouzit, kdeze model Cat neexistuje
+    # then right model need to be specified
+    #
     # <%= f.token_field :cat_id, :model => :category %>
     #
-    # Mozeme mapovat aj opacny pripad, teda cez kategoriu upravovat produkty
-    # 
+    # We can use token_input also for mapping category to products
+    # we will use ActiveRecord method product_ids which be default return array of ids from association
     # <%= form_for @category do |f| %>
-    #   zaklad pre manovanie 1:N, attribut product_ids poskytuje activer_record a vracia pole integerov
     #   <%= f.token_field :product_ids %>
     # <% end %>
     #
-    # v modely category je ale potrebne osetrit pripad kedy do metody product_ids sa pokusime vlozit string
+    # in model we have to change product_ids= method like this
     #
     # class Category < ActiveRecord::Base
-    #   has_many :products # ekvivaletne je to pre pouzite has_many :through
+    #   has_many :products
     #
     #   alias_method :product_ids_old=, :product_ids=
     #   def product_ids=(ids)
     #     ids = ids.split(",").map(&:to_i) if ids.is_a?(String)
     #     self.product_ids_old=ids
     #   end
-    #   # zbytok triedy
+    #
+    #   # rest of the class...
     # end
     def token_field(attribute_name, options = {})
       association_type = @object.send(attribute_name).respond_to?(:each) ? :many : :one
@@ -98,7 +101,7 @@ module TokenFieldHelper
       token_limit = 1 if association_type == :one
 
       if token_url.nil?
-        token_url = "/admin/#{model_name.pluralize}/token.json"
+        token_url = "/#{model_name.pluralize}/token.json"
       end
 
       id = @object.send(:id)
@@ -130,52 +133,14 @@ module TokenFieldHelper
             preventDuplicates: true,
             prePopulate: jQuery('##{attribute_name}').data('pre'),
             theme: 'facebook',
-            hintText: '"+t('helpers.token.hint_text')+"',
-            searchingText: '"+t('helpers.token.searching_text')+"',
-            noResultsText: '"+t('helpers.token.no_results_text')+"',
+            hintText: '"+t('helpers.token_field.hint_text')+"',
+            searchingText: '"+t('helpers.token_field.searching_text')+"',
+            noResultsText: '"+t('helpers.token_field.no_results_text')+"',
             onAdd: "+on_add+",
             onDelete: "+on_delete+"
             });
           });
       ")
-    end
-
-    #helper na vykreslenie tagov namiesto multichoice selectu na tagy
-    #ak by sa to malo ukladat do textoveho fieldu, tak model musi mat virtualny atribut, ktory bude brat pole stringov
-    def tag_field(attribute_name, options = {})
-      model_name = "tags"
-      token_url = options[:token_url]
-      if token_url.nil?
-        token_url = "/#{model_name.pluralize}/token.json"
-      end
-
-      id = @object.send(:id)
-
-      html_id = "#{@object_name}_#{attribute_name.to_s}"
-      html_name = "#{@object_name}[#{attribute_name.to_s}][]"
-      tags = @object.send(attribute_name)
-
-      html_id << "_#{id.to_i.to_s}" if id
-
-      javascript_tag("
-        jQuery(function(){
-            jQuery('##{html_id}').tagit({
-              triggerKeys: ['enter', 'comma', 'tab'],
-              initialTags: #{tags.to_json},
-              select: true,
-              tagSource: function(search, showChoices) {
-                var that = this;
-                jQuery.ajax({
-                  url: '#{token_url}',
-                  data: search,
-                  success: function(choices) {
-                    showChoices(choices);
-                  }
-                });
-              }
-            });
-        });
-      ")+ content_tag(:ul, "<li>sdsf</li>", :id => html_id, :name => html_name)
     end
   end
 end

@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
 
-  match "categories/token.json" => 'categories#token'
-  resources :categories
+  resources :categories do
+    collection do
+      get :token
+    end
+  end
 
   root :to => "categories#index"
 end
