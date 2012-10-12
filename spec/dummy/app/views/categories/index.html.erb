@@ -1,0 +1,9 @@
+<h1>Categories</h1>
+<%= link_to "New", new_category_path %>
+<ul>
+  <% @categories.each do |category| %>
+    <%= content_tag_for(:li, category) do %>
+      <%= category.name %> - <%= category.parent_id.to_i %>
+    <% end %>
+  <% end %>
+</ul>
