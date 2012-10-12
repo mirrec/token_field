@@ -11,14 +11,27 @@ describe "Categories" do
     page.should have_content("wood - 0")
   end
 
-  it "should be possible to add new element" do
+  # version without javascript
+  it "should be possible to add new element without javascript enabled" do
     visit new_category_path
 
     fill_in "category_name", :with => "hello"
-    fill_in "category_parent_id", :with => "3"
+    fill_in "category_parent_id", :with => @category.id.to_s
     click_button "Create Category"
 
     page.should have_content("wood - 0")
-    page.should have_content("hello - 3")
+    page.should have_content("hello - #{@category.id}")
+  end
+
+  # version with javascript
+  it "should be possible to add new element with javascript enabled", :js => true do
+    visit new_category_path
+
+    fill_in "category_name", :with => "hello"
+    fill_in_token "category_parent_id", :with => "wood"
+    click_button "Create Category"
+
+    page.should have_content("wood - 0")
+    page.should have_content("hello - #{@category.id}")
   end
 end

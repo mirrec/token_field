@@ -1,12 +1,2 @@
 <h1>Category#new</h1>
-<%= form_for(@category) do |f| %>
-  <p>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :parent_id %>
-    <%= f.text_field :parent_id %>
-  </p>
-  <%= f.submit %>
-<% end %>
+<%= render :partial => 'form' %>

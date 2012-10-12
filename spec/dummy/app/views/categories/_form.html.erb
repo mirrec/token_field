@@ -1,0 +1,11 @@
+<%= form_for(@category) do |f| %>
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :parent_id %>
+    <%= f.token_field :parent_id, :model => :category, :token_url => "/categories/token.json" %>
+  </p>
+  <%= f.submit %>
+<% end %>
