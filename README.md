@@ -81,6 +81,12 @@ then in view we call token_field with param :model => :category
        <%= f.token_field :parent_id, :model => :category, :token_url => token_categories_path %>
     <% end %>
 
+in case model is in namespace for example MyApp you should use :model like this
+
+    <%= form_for @category do |f| %>
+       <%= f.token_field :parent_id, :model => "MyApp::Category", :token_url => token_categories_path %>
+    <% end %>
+
 if there would be model Parent, we can omit :model parameter.
 for example in Product model like this
 
