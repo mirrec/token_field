@@ -6,6 +6,7 @@ for has_many and belongs_to association
 
 http://railscasts.com/episodes/258-token-fields
 http://loopj.com/jquery-tokeninput/
+https://github.com/foohey/jquery-tokeninput-rails
 
 helper will render standard text field input with javascript.
 javascript will change standard input to token field input
@@ -22,6 +23,14 @@ And then execute:
     $ bundle
 
 ## Usage
+
+### Javascript include
+
+    //= require jquery.tokeninput
+
+### Stylesheet include
+
+    *= require token-input-facebook
 
 ### belongs_to with token_input
 

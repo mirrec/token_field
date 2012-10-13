@@ -9,11 +9,11 @@ Gem::Specification.new do |s|
   s.version     = TokenField::VERSION
   s.authors     = ["Miroslav Hettes"]
   s.email       = ["hettes@webynamieru.sk"]
-  s.homepage    = "TODO"
+  s.homepage    = "https://github.com/mirrec/token_field"
   s.summary     = "Form helper input for jquery token input"
   s.description = "Form helper with how to section for using token input jquery plugin in application"
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", "~> 3.2.6"
