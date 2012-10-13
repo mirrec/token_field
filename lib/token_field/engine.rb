@@ -11,5 +11,9 @@ module TokenField
     initializer "token_input" do
       require "token_field/simple_form/token_input" if defined?(SimpleForm)
     end
+
+    initializer "token_field_test_helper" do
+      require "token_field/capybara/dsl" if Rails.env.test?
+    end
   end
 end
