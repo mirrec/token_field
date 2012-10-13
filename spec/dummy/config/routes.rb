@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       get :token
     end
   end
+  resources :products
 
   root :to => "categories#index"
 end

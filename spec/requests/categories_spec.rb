@@ -21,6 +21,8 @@ describe "Categories" do
 
     page.should have_content("wood - 0")
     page.should have_content("hello - #{@category.id}")
+
+    Category.last.parent.id.should eq @category.id
   end
 
   # version with javascript
@@ -33,5 +35,7 @@ describe "Categories" do
 
     page.should have_content("wood - 0")
     page.should have_content("hello - #{@category.id}")
+
+    Category.last.parent.id.should eq @category.id
   end
 end

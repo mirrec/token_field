@@ -1,0 +1,9 @@
+<h1>Products</h1>
+<%= link_to "New", new_product_path %>
+<ul>
+  <% @products.each do |product| %>
+    <%= content_tag_for(:li, product) do %>
+      <%= product.name %> - <%= product.category_ids.inspect %>
+    <% end %>
+  <% end %>
+</ul>

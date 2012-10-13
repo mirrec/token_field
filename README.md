@@ -72,8 +72,8 @@ then in view we call token_field with param :model => :category
        <%= f.token_field :parent_id, :model => :category %>
     <% end %>
 
-if there would be model Parent, we can omit :model parameter
-for example in Productu model like
+if there would be model Parent, we can omit :model parameter.
+for example in Product model like this
 
     class Product < ActiveRecord::Base
        belongs_to :category

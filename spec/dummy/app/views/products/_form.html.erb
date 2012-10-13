@@ -1,0 +1,11 @@
+<%= form_for(@product) do |f| %>
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :category_ids %>
+    <%= f.token_field :category_ids, :token_url => token_categories_path %>
+  </p>
+  <%= f.submit %>
+<% end %>
