@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    token_field (0.0.3)
+    token_field (1.0.0)
       rails (~> 3.2.6)
 
 GEM
@@ -64,8 +64,6 @@ GEM
       thor (~> 0.14)
     jquery-tokeninput-rails (1.6.0)
     json (1.7.5)
-    launchy (2.1.2)
-      addressable (~> 2.3)
     libwebsocket (0.1.5)
       addressable
     mail (2.4.4)
@@ -147,15 +145,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  capybara
-  database_cleaner
-  factory_girl_rails
+  capybara (~> 1.1.2)
+  database_cleaner (~> 0.8.0)
+  factory_girl_rails (~> 4.1.0)
   jquery-rails
   jquery-tokeninput-rails
-  launchy
   pry
-  rspec-rails
-  selenium-webdriver
+  rspec-rails (~> 2.11.0)
+  selenium-webdriver (~> 2.25.0)
   simple_form
-  sqlite3
+  sqlite3 (~> 1.3.6)
   token_field!

@@ -1,3 +1,9 @@
+# 1.0.0
+## changed
+* set versions for developer dependencies
+* removed pry from development_dependency
+* removed lanchy from development_dependency
+
 # 0.0.3
 ## fixes
 * test helpers are now required automaticaly
