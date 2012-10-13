@@ -5,7 +5,8 @@
   </p>
   <p>
     <%= f.label :category_ids %>
-    <%= f.token_field :category_ids, :token_url => token_categories_path %>
+    <%= f.token_field :category_ids, :token_url => token_categories_path, :append_to_id => :id %>
   </p>
   <%= f.submit %>
 <% end %>
+<%= link_to "Listing", products_path %>

@@ -3,7 +3,7 @@
 <ul>
   <% @categories.each do |category| %>
     <%= content_tag_for(:li, category) do %>
-      <%= category.name %> - <%= category.parent_id.to_i %>
+      <%= category.name %> - <%= category.parent_id.to_i %> <%= link_to "Edit", edit_category_path(category), :id => dom_id(category) %>
     <% end %>
   <% end %>
 </ul>

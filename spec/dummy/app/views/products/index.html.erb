@@ -3,7 +3,7 @@
 <ul>
   <% @products.each do |product| %>
     <%= content_tag_for(:li, product) do %>
-      <%= product.name %> - <%= product.category_ids.inspect %>
+      <%= product.name %> - <%= product.category_ids.inspect %> <%= link_to "Edit", edit_product_path(product), :id => dom_id(product) %>
     <% end %>
   <% end %>
 </ul>

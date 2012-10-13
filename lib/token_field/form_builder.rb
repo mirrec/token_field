@@ -96,6 +96,7 @@ module TokenField
       association = attribute_name.to_s.gsub(/_ids?/, "").to_sym
       model = model_name.camelize.constantize
       token_url = options[:token_url]
+      append_to_id = options[:append_to_id]
 
       token_limit = nil
       token_limit = 1 if association_type == :one
@@ -105,10 +106,13 @@ module TokenField
       end
 
       id = @object.send(:id)
-      id ||= options[:num]
 
       html_id = "#{@object_name}_#{attribute_name.to_s}"
-      html_id << "_#{id.to_i.to_s}" if id
+      if append_to_id == :id && id
+        html_id << "_#{id}"
+      elsif append_to_id && append_to_id != :id
+        html_id << "_#{append_to_id}"
+      end
 
       value = nil
       data_pre = nil

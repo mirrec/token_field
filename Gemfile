@@ -15,4 +15,4 @@ gem "jquery-tokeninput-rails"
 # your gem to rubygems.org.
 
 # To use debugger
-# gem 'debugger'
+gem "pry"

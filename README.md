@@ -113,6 +113,50 @@ so you can enter more than one category.
        <%= f.token_field :category_ids %>
     <% end %>
 
+if you want to use multiple token inputs on page, and id of element would be the same, you can user option :append_to_id.
+
+    <%= form_for @product do |f| %>
+       <%= f.token_field :category_ids, :append_to_id => :id %>
+    <% end %>
+
+if @product.id is present and for example "3" it will use this id and generate id of html input like this "product_categories_ids_3"
+if @product.id is nil id of html input will be "product_categories_ids"
+
+other value for :append_id option will be used like this
+
+    <%= form_for @product do |f| %>
+       <%= f.token_field :category_ids, :append_to_id => 5 %>
+    <% end %>
+
+id of html input will be "product_categories_ids_5"
+
+## Testing
+
+add support for helpers in rspec
+
+    RSpec.configure do |config|
+      config.include TokenField::Capybara::Dsl
+    end
+
+### test helpers for capybara
+
+filling token input
+
+    fill_in "category_parent_id", :with => new_parent.id # standard input
+    fill_in_token "category_parent_id", :with => "wood"
+
+clearing token input
+
+    clear_token "category_parent_id"
+
+project is covered by integration tests. using rspec, capybara and selenium
+how to run test
+
+    bundle # install dependency
+    rake db:create
+    rake db:migrate RAILS_ENV=test
+    rspec spec/
+
 
 ## Contributing
 
@@ -122,15 +166,6 @@ so you can enter more than one category.
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
-## Testing
-
-project is covered by integration tests. using rspec, capybara and selenium
-how to run test
-
-    bundle # install dependency
-    rake db:create
-    rake db:migrate RAILS_ENV=test
-    rspec spec/
 
 ## Licence
 
