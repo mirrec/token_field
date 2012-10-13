@@ -8,4 +8,8 @@ FactoryGirl.define do
   factory :product do
     sequence(:name) { |n| "product_#{n}" }
   end
+
+  factory :item do
+    sequence(:name) { |n| "item_#{n}" }
+  end
 end

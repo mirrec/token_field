@@ -78,7 +78,7 @@ in routes we have route for token ajax call
 then in view we call token_field with param :model => :category
 
     <%= form_for @category do |f| %>
-       <%= f.token_field :parent_id, :model => :category %>
+       <%= f.token_field :parent_id, :model => :category, :token_url => token_categories_path %>
     <% end %>
 
 if there would be model Parent, we can omit :model parameter.
@@ -91,7 +91,7 @@ for example in Product model like this
 we can use this code in view
 
     <%= form_for @product do |f| %>
-      <%= f.token_field :category_id %>
+      <%= f.token_field :category_id, :token_url => token_categories_path %>
     <% end %>
 
 helper will allow you to enter only one element.
@@ -119,13 +119,13 @@ in view you will use attribute category_ids. token input will expected more than
 so you can enter more than one category.
 
     <%= form_for @product do |f| %>
-       <%= f.token_field :category_ids %>
+       <%= f.token_field :category_ids, :token_url => token_categories_path %>
     <% end %>
 
 if you want to use multiple token inputs on page, and id of element would be the same, you can user option :append_to_id.
 
     <%= form_for @product do |f| %>
-       <%= f.token_field :category_ids, :append_to_id => :id %>
+       <%= f.token_field :category_ids, :token_url => token_categories_path, :append_to_id => :id %>
     <% end %>
 
 if @product.id is present and for example "3" it will use this id and generate id of html input like this "product_categories_ids_3"
@@ -134,10 +134,21 @@ if @product.id is nil id of html input will be "product_categories_ids"
 other value for :append_id option will be used like this
 
     <%= form_for @product do |f| %>
-       <%= f.token_field :category_ids, :append_to_id => 5 %>
+       <%= f.token_field :category_ids, :token_url => token_categories_path, :append_to_id => 5 %>
     <% end %>
 
 id of html input will be "product_categories_ids_5"
+
+### SimpleForm support
+
+if you use simple_form in your project, TokenInput field will be loaded.
+you can use it in view like this
+
+    <%= simple_form_for(@item) do |f| %>
+      <%= f.input :category_id, :as => :token, :token_url => token_categories_path %>
+    <% end %>
+
+all options for token_field helper can be used in simple form helper as well.
 
 ## Testing
 

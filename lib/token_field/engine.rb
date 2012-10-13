@@ -7,5 +7,9 @@ module TokenField
         include TokenField::FormBuilder
       end
     end
+
+    initializer "token_input" do
+      require "token_field/simple_form/token_input" if defined?(SimpleForm)
+    end
   end
 end

@@ -1,0 +1,9 @@
+<h1>Items</h1>
+<%= link_to "New", new_item_path %>
+<ul>
+  <% @items.each do |item| %>
+    <%= content_tag_for(:li, item) do %>
+      <%= item.name %> - <%= item.category_id %> <%= link_to "Edit", edit_item_path(item), :id => dom_id(item) %>
+    <% end %>
+  <% end %>
+</ul>
