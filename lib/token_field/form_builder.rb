@@ -113,6 +113,7 @@ module TokenField
       elsif append_to_id && append_to_id != :id
         html_id << "_#{append_to_id}"
       end
+      html_id = html_id.parameterize.underscore
 
       value = nil
       data_pre = nil
@@ -127,8 +128,7 @@ module TokenField
       on_add = options[:on_add] ? "#{options[:on_add]}" : "false"
       on_delete = options[:on_delete] ? "#{options[:on_delete]}" : "false"
 
-      text_field("#{attribute_name}", "data-pre" => data_pre, :value => value, :id => html_id)+
-          javascript_tag("
+      js_content = "
         jQuery.noConflict();
         jQuery(function() {
           jQuery('##{html_id}').tokenInput('#{token_url}', {
@@ -144,7 +144,9 @@ module TokenField
             onDelete: "+on_delete+"
             });
           });
-      ")
+      "
+      script = content_tag(:script, js_content.html_safe, :type => Mime::JS)
+      text_field("#{attribute_name}", "data-pre" => data_pre, :value => value, :id => html_id) + script
     end
   end
 end
