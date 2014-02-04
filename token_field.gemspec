@@ -24,5 +24,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "factory_girl_rails", "~> 4.1.0"
   s.add_development_dependency "database_cleaner", "~> 0.8.0"
   s.add_development_dependency "capybara", "~> 1.1.2"
-  s.add_development_dependency "selenium-webdriver", "~> 2.25.0"
+  s.add_development_dependency "selenium-webdriver", "~> 2.39.0"
 end

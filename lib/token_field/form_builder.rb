@@ -96,6 +96,7 @@ module TokenField
       association = attribute_name.to_s.gsub(/_ids?/, "").to_sym
       model = model_name.camelize.constantize
       token_url = options[:token_url]
+      token_url_is_function = options.fetch(:token_url_is_function) { false }
       append_to_id = options[:append_to_id]
 
       token_limit = nil
@@ -128,10 +129,12 @@ module TokenField
       on_add = options[:on_add] ? "#{options[:on_add]}" : "false"
       on_delete = options[:on_delete] ? "#{options[:on_delete]}" : "false"
 
+      token_url = "'#{token_url}'" unless token_url_is_function
+
       js_content = "
         jQuery.noConflict();
         jQuery(function() {
-          jQuery('##{html_id}').tokenInput('#{token_url}', {
+          jQuery('##{html_id}').tokenInput(#{token_url}, {
             crossDomain: false,
             tokenLimit: #{token_limit.nil? ? "null" : token_limit.to_i},
             preventDuplicates: true,

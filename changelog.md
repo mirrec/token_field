@@ -1,3 +1,11 @@
+# 1.1.0 (February 4, 2014)
+## added
+* `token_url_is_function` option for view helper to be able to use dynamic computing of url
+
+
+    <%= f.token_field :parent_id, :model => :category, :token_url => "function(){ return '/hello' }", :token_url_is_function => true %>
+    <%= f.token_field :parent_id, :model => :category, :token_url => "myOwnFunctionForUrl", :token_url_is_function => true %>
+
 # 1.0.1 (October 24, 2012)
 ## changed
 * javascript tag is generating without CDATA attribute

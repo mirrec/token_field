@@ -1,6 +1,6 @@
 <%= simple_form_for(@item) do |f| %>
   <%= f.input :name %>
-  <%= f.input :category_id, :as => :token, :token_url => token_categories_path %>
+  <%= f.input :category_id, :as => :token, :token_url => "function() { return '#{token_categories_path}'; }", :token_url_is_function => true %>
   <%= f.submit %>
 <% end %>
 <%= link_to "Listing", items_path %>

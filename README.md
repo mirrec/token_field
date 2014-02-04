@@ -87,6 +87,24 @@ in case model is in namespace for example MyApp you should use :model like this
        <%= f.token_field :parent_id, :model => "MyApp::Category", :token_url => token_categories_path %>
     <% end %>
 
+if you need dynamically evaluated url of token input, you can pass inline javascript function to `:token_url` options but with `:token_url_is_function` set to `true`
+
+    <%= form_for @category do |f| %>
+       <%= f.token_field :parent_id, :model => :category, :token_url => "function(){ return '/hello' }", :token_url_is_function => true %>
+    <% end %>
+
+also own separate function are supported
+
+    <%= form_for @category do |f| %>
+       <%= f.token_field :parent_id, :model => :category, :token_url => "myDynamicUrl", :token_url_is_function => true %>
+    <% end %>
+
+    <script type="text/javascript">
+      function myDynamicUrl() {
+        return "/my-url/";
+      }
+    </script>
+
 if there would be model Parent, we can omit :model parameter.
 for example in Product model like this
 
