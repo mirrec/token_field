@@ -44,9 +44,9 @@ we have a model Category like this
        has_many :categories, :foreign_key => :parent_id
        belongs_to :parent, :foreign_key => :parent_id, :class_name => "Category"
 
-       # method for converting array of categories to array of hashes in format that token input accepts
-       def self.token_json(items)
-         items.map{|i| {:id => i.id, :name => i.name} }
+       # format that token input use
+       def to_token
+         {:id => id, :name => name}
        end
     end
 
@@ -56,9 +56,10 @@ we have action for responding for token input ajax calls, simple autocomplete
 
        # action for autocomplete
        def token
-         @categories = Category.where("categories.name like ?", "%#{params[:q]}%")
+         categories = Category.where("categories.name like ?", "%#{params[:q]}%")
+
          respond_to do |format|
-           format.json { render :json => Category.token_json(@categories) }
+           format.json { render :json => categories.map(&:to_token) }
          end
        end
 
@@ -173,6 +174,11 @@ you can use it in view like this
     <% end %>
 
 all options for token_field helper can be used in simple form helper as well.
+
+## Updating from 1.x to 2.0
+
+Add `#to_token` method to model you are using
+Remove `.token_json` method, we don't use it anymore
 
 ## Testing
 

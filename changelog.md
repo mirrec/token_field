@@ -4,6 +4,8 @@
 * switch to `capybara-webkit`
 * update `rspec-rails`
 * use `expect` syntax in tests
+* reorgonize tests in more logical way
+* Remove `.token_json` method, we don't use it anymore, use `#to_token` instead
 
 # 1.1.0 (February 4, 2014)
 ## added

@@ -19,8 +19,8 @@ module TokenField
     #   has_many :products
     #
     #   # method for converting array of categories to array of hashes in format that token input accepts
-    #   def self.token_json(items)
-    #     items.map{|i| {:id => i.id, :name => i.name} }
+    #   def to_token
+    #     {:id => id, :name => name}
     #   end
     # end
     #
@@ -34,9 +34,10 @@ module TokenField
     #
     #   # action for autocomplete
     #   def token
-    #     @categories = Category.where("categories.name like ?", "%#{params[:q]}%")
+    #     categories = Category.where("categories.name like ?", "%#{params[:q]}%")
+    #
     #     respond_to do |format|
-    #       format.json { render :json => Category.token_json(@categories) }
+    #       format.json { render :json => categories.map(&:to_token) }
     #     end
     #   end
     #
@@ -92,19 +93,15 @@ module TokenField
     # end
     def token_field(attribute_name, options = {})
       association_type = @object.send(attribute_name).respond_to?(:each) ? :many : :one
-      model_name = (options[:model] || attribute_name.to_s.gsub(/_ids?/, "")).to_s
+      model_name = options.fetch(:model) { attribute_name.to_s.gsub(/_ids?/, "") }.to_s
       association = attribute_name.to_s.gsub(/_ids?/, "").to_sym
-      model = model_name.camelize.constantize
-      token_url = options[:token_url]
+      token_url = options.fetch(:token_url) { "/#{model_name.pluralize}/token.json" }
       token_url_is_function = options.fetch(:token_url_is_function) { false }
       append_to_id = options[:append_to_id]
+      token_method = options.fetch(:token_method) { :to_token }
 
       token_limit = nil
       token_limit = 1 if association_type == :one
-
-      if token_url.nil?
-        token_url = "/#{model_name.pluralize}/token.json"
-      end
 
       id = @object.send(:id)
 
@@ -116,15 +113,16 @@ module TokenField
       end
       html_id = html_id.parameterize.underscore
 
-      value = nil
-      data_pre = nil
-      if association_type == :one && @object.send(association)
-        data_pre = model.token_json([@object.send(association)]).to_json()
-        value = @object.send(association).id
-      elsif association_type == :many && @object.send(association.to_s.pluralize).count > 0
-        data_pre = model.token_json(@object.send(association.to_s.pluralize)).to_json()
-        value = @object.send(attribute_name).join(",")
+      results = []
+
+      if association_type == :one && @object.public_send(association)
+        results << @object.public_send(association)
+      elsif association_type == :many && @object.public_send(association.to_s.pluralize).count > 0
+        @object.public_send(association.to_s.pluralize).each { |record| results << record }
       end
+
+      data_pre = results.map{ |result| result.public_send(token_method) }
+      value = data_pre.map{ |row| row[:id] }.join(',')
 
       on_add = options[:on_add] ? "#{options[:on_add]}" : "false"
       on_delete = options[:on_delete] ? "#{options[:on_delete]}" : "false"
@@ -149,7 +147,7 @@ module TokenField
           });
       "
       script = content_tag(:script, js_content.html_safe, :type => Mime::JS)
-      text_field("#{attribute_name}", "data-pre" => data_pre, :value => value, :id => html_id) + script
+      text_field("#{attribute_name}", "data-pre" => data_pre.to_json, :value => value, :id => html_id) + script
     end
   end
 end
