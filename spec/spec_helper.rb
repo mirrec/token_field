@@ -6,6 +6,10 @@ require 'rspec/autorun'
 require 'capybara/rails'
 require "factory_girl_rails"
 require "database_cleaner"
+require 'capybara-webkit'
+require 'capybara-screenshot/rspec'
+
+Capybara.javascript_driver = :webkit
 
 ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
 
@@ -38,7 +42,6 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
-    Capybara.reset_sessions!
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

@@ -63,6 +63,8 @@ describe "Categories" do
     fill_in_token "category_parent_id", :with => "new parent"
     click_button "Update Category"
 
+    page.should have_content "Categories"
+
     category.reload.parent.id.should eq new_parent.id
   end
 end

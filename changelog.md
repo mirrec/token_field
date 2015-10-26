@@ -1,3 +1,8 @@
+# 2.0.0 (Not yet released)
+## changed
+* update `capybara` to 2.5 version
+* switch to `capybara-webkit`
+
 # 1.1.0 (February 4, 2014)
 ## added
 * `token_url_is_function` option for view helper to be able to use dynamic computing of url

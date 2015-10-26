@@ -31,6 +31,7 @@ class CategoriesController < ApplicationController
 
   def token
     @categories = Category.where("categories.name like ?", "%#{params[:q]}%")
+
     respond_to do |format|
       format.json { render :json => Category.token_json(@categories) }
     end

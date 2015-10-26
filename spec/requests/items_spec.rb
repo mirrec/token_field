@@ -61,7 +61,10 @@ describe "Items" do
 
     clear_token "item_category_id"
     fill_in_token "item_category_id", :with => "skirt"
+
     click_button "Update Item"
+
+    page.should have_content "Items"
 
     item.reload.category.id.should eq @skirt.id
   end

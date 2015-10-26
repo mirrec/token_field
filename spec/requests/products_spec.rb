@@ -65,6 +65,8 @@ describe "Products" do
     fill_in_token "product_category_ids_#{product.id}", :with => "shoes"
     click_button "Update Product"
 
+    page.should have_content "Products"
+
     product.reload.categories.map(&:id).sort.should eq [@skirt.id, @shoes.id].sort
   end
 end

@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec-rails", "~> 2.11.0"
   s.add_development_dependency "factory_girl_rails", "~> 4.1.0"
   s.add_development_dependency "database_cleaner", "~> 0.8.0"
-  s.add_development_dependency "capybara", "~> 1.1.2"
-  s.add_development_dependency "selenium-webdriver", "~> 2.39.0"
+  s.add_development_dependency "capybara", "~> 2.5.0"
+  s.add_development_dependency "capybara-webkit", "~> 1.7.1"
+  s.add_development_dependency "capybara-screenshot", "~> 1.0.11"
 end
