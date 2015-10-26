@@ -2,7 +2,6 @@
 ENV["RAILS_ENV"] = 'test'
 require File.expand_path("../dummy/config/environment", __FILE__)
 require 'rspec/rails'
-require 'rspec/autorun'
 require 'capybara/rails'
 require "factory_girl_rails"
 require "database_cleaner"
@@ -34,6 +33,7 @@ RSpec.configure do |config|
 
   config.include Capybara::DSL
   config.include TokenField::Capybara::Dsl
+  config.include Dummy::Application.routes.url_helpers
 
   config.before(:each) do
     DatabaseCleaner.strategy = :truncation
@@ -62,4 +62,6 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  config.expect_with(:rspec) { |c| c.syntax = :should }
 end
