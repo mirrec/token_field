@@ -1,1 +1,1 @@
-rvm use ruby-2.2.0@token_field --create
+rvm use ruby-2.2.2@token_field --create
