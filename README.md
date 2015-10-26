@@ -15,8 +15,10 @@ javascript will change standard input to token field input
 
 Add this line to your application's Gemfile:
 
-    gem "jquery-tokeninput-rails" # dependency
-    gem "token_field"
+```ruby
+gem 'jquery-tokeninput-rails' # dependency
+gem 'token_field'
+```
 
 And then execute:
 
