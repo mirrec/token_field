@@ -8,7 +8,7 @@ describe "Categories" do
 
   it "should list categories" do
     visit categories_path
-    page.should have_content "wood - 0"
+    expect(page).to have_content("wood - 0")
   end
 
   # version without javascript
@@ -19,10 +19,10 @@ describe "Categories" do
     fill_in "category_parent_id", :with => @category.id.to_s
     click_button "Create Category"
 
-    page.should have_content "wood - 0"
-    page.should have_content "hello - #{@category.id}"
+    expect(page).to have_content("wood - 0")
+    expect(page).to have_content("hello - #{@category.id}")
 
-    Category.last.parent.id.should eq @category.id
+    expect(Category.last.parent.id).to eq(@category.id)
   end
 
   # version with javascript
@@ -33,38 +33,38 @@ describe "Categories" do
     fill_in_token "category_parent_id", :with => "wood"
     click_button "Create Category"
 
-    page.should have_content "wood - 0"
-    page.should have_content "hello - #{@category.id}"
+    expect(page).to have_content("wood - 0")
+    expect(page).to have_content("hello - #{@category.id}")
 
-    Category.last.parent.id.should eq @category.id
+    expect(Category.last.parent.id).to eq(@category.id)
   end
 
   it "should be possible to edit element without javascript" do
     new_parent = create(:category, :parent_id => nil)
     category = create(:category, :parent_id => @category.id)
 
-    category.parent.id.should eq @category.id
+    expect(category.parent.id).to eq(@category.id)
     visit edit_category_path(category)
 
     fill_in "category_parent_id", :with => new_parent.id.to_s
     click_button "Update Category"
 
-    category.reload.parent.id.should eq new_parent.id
+    expect(category.reload.parent.id).to eq(new_parent.id)
   end
 
   it "should be possible to edit element with javascript enabled", :js => true do
     new_parent = create(:category, :name => "new parent", :parent_id => nil)
     category = create(:category, :parent_id => @category.id)
 
-    category.parent.id.should eq @category.id
+    expect(category.parent.id).to eq(@category.id)
     visit edit_category_path(category)
 
     clear_token "category_parent_id"
     fill_in_token "category_parent_id", :with => "new parent"
     click_button "Update Category"
 
-    page.should have_content "Categories"
+    expect(page).to have_content("Categories")
 
-    category.reload.parent.id.should eq new_parent.id
+    expect(category.reload.parent.id).to eq(new_parent.id)
   end
 end

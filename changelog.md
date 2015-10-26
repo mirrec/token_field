@@ -2,6 +2,8 @@
 ## changed
 * update `capybara` to 2.5 version
 * switch to `capybara-webkit`
+* update `rspec-rails`
+* use `expect` syntax in tests
 
 # 1.1.0 (February 4, 2014)
 ## added

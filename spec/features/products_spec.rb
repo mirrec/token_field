@@ -11,7 +11,7 @@ describe "Products" do
   it "should list products" do
     create(:product, :name => "new one", :category_ids => [@shoes.id, @skirt.id])
     visit products_path
-    page.should have_content "new one - [#{@shoes.id}, #{@skirt.id}]"
+    expect(page).to have_content("new one - [#{@shoes.id}, #{@skirt.id}]")
   end
 
   # version without javascript
@@ -22,9 +22,9 @@ describe "Products" do
     fill_in "product_category_ids", :with => "#{@pents.id}, #{@shoes.id}"
     click_button "Create Product"
 
-    page.should have_content "hello - [#{@pents.id}, #{@shoes.id}]"
+    expect(page).to have_content("hello - [#{@pents.id}, #{@shoes.id}]")
 
-    Product.last.categories.map(&:id).should eq [@pents.id, @shoes.id]
+    expect(Product.last.categories.map(&:id)).to eq ([@pents.id, @shoes.id])
   end
 
   # version with javascript
@@ -36,27 +36,29 @@ describe "Products" do
     fill_in_token "product_category_ids", :with => "pents"
     click_button "Create Product"
 
-    page.should have_content "hello"
-    page.should have_content "hello - [#{@shoes.id}, #{@pents.id}]"
+    expect(page).to have_content("hello")
+    expect(page).to have_content("hello - [#{@shoes.id}, #{@pents.id}]")
 
-    Product.last.categories.map(&:id).should eq [@shoes.id, @pents.id]
+    expect(Product.last.categories.map(&:id)).to eq([@shoes.id, @pents.id])
   end
 
   it "should be possible to edit element without javascript" do
     product = create(:product, :name => "product", :category_ids => [@shoes.id, @pents.id])
-    product.categories.map(&:id).should eq [@shoes.id, @pents.id]
+    expect(product.categories.map(&:id)).to eq([@shoes.id, @pents.id])
 
     visit edit_product_path(product)
 
     fill_in "product_category_ids_#{product.id}", :with => "#{@skirt.id}, #{@shoes.id}"
     click_button "Update Product"
 
-    product.reload.categories.map(&:id).should eq [@skirt.id, @shoes.id].sort
+    expect(page).to have_content("Products")
+
+    expect(product.reload.categories.map(&:id)).to eq([@skirt.id, @shoes.id].sort)
   end
 
   it "should be possible to edit element with javascript enabled", :js => true do
     product = create(:product, :name => "product", :category_ids => [@shoes.id, @pents.id])
-    product.categories.map(&:id).should eq [@shoes.id, @pents.id]
+    expect(product.categories.map(&:id)).to eq([@shoes.id, @pents.id])
 
     visit edit_product_path(product)
 
@@ -65,8 +67,8 @@ describe "Products" do
     fill_in_token "product_category_ids_#{product.id}", :with => "shoes"
     click_button "Update Product"
 
-    page.should have_content "Products"
+    expect(page).to have_content("Products")
 
-    product.reload.categories.map(&:id).sort.should eq [@skirt.id, @shoes.id].sort
+    expect(product.reload.categories.map(&:id).sort).to eq([@skirt.id, @shoes.id].sort)
   end
 end

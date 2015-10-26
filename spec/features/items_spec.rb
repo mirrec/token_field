@@ -11,7 +11,7 @@ describe "Items" do
   it "should list items" do
     create(:item, :name => "new one", :category_id => @shoes.id)
     visit items_path
-    page.should have_content "new one - #{@shoes.id}"
+    expect(page).to have_content("new one - #{@shoes.id}")
   end
 
   # version without javascript
@@ -22,9 +22,9 @@ describe "Items" do
     fill_in "item_category_id", :with => @shoes.id
     click_button "Create Item"
 
-    page.should have_content "hello - #{@shoes.id}"
+    expect(page).to have_content("hello - #{@shoes.id}")
 
-    Item.last.category.id.should eq @shoes.id
+    expect(Item.last.category.id).to eq(@shoes.id)
   end
 
   # version with javascript
@@ -35,27 +35,27 @@ describe "Items" do
     fill_in_token "item_category_id", :with => "shoes"
     click_button "Create Item"
 
-    page.should have_content "hello"
-    page.should have_content "hello - #{@shoes.id}"
+    expect(page).to have_content("hello")
+    expect(page).to have_content("hello - #{@shoes.id}")
 
-    Item.last.category.id.should eq @shoes.id
+    expect(Item.last.category.id).to eq(@shoes.id)
   end
 
   it "should be possible to edit element without javascript" do
     item = create(:item, :name => "item", :category_id => @shoes.id)
-    item.category.id.should eq @shoes.id
+    expect(item.category.id).to eq(@shoes.id)
 
     visit edit_item_path(item)
 
     fill_in "item_category_id", :with => @skirt.id
     click_button "Update Item"
 
-    item.reload.category.id.should eq @skirt.id
+    expect(item.reload.category.id).to eq(@skirt.id)
   end
 
   it "should be possible to edit element with javascript enabled", :js => true do
     item = create(:item, :name => "item", :category_id => @shoes.id)
-    item.category.id.should eq @shoes.id
+    expect(item.category.id).to eq(@shoes.id)
 
     visit edit_item_path(item)
 
@@ -64,8 +64,8 @@ describe "Items" do
 
     click_button "Update Item"
 
-    page.should have_content "Items"
+    expect(page).to have_content("Items")
 
-    item.reload.category.id.should eq @skirt.id
+    expect(item.reload.category.id).to eq(@skirt.id)
   end
 end
