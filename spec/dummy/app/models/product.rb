@@ -1,5 +1,4 @@
 class Product < ActiveRecord::Base
-  attr_accessible :name, :category_ids
 
   has_many :product_has_categories
   has_many :categories, :through => :product_has_categories

@@ -2,6 +2,8 @@
 ## added
 * `:waiting_call` option to test helper method `fill_in_token`, default is `sleep(1)` call
 ## changed
+* cahnge to `ruby-2.2.0`
+* require `rails` version to `~> 4.2.0`
 * update `capybara` to 2.5 version
 * switch to `capybara-webkit`
 * update `rspec-rails`

@@ -16,13 +16,13 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 3.2.6"
+  s.add_dependency "rails", "~> 4.2.0"
   # s.add_dependency "jquery-rails"
 
-  s.add_development_dependency "sqlite3", "~> 1.3.6"
+  s.add_development_dependency "sqlite3", "~> 1.3.11"
   s.add_development_dependency "rspec-rails", "~> 3.3.3"
   s.add_development_dependency "factory_girl_rails", "~> 4.1.0"
-  s.add_development_dependency "database_cleaner", "~> 0.8.0"
+  s.add_development_dependency "database_cleaner", "~> 1.5.1"
   s.add_development_dependency "capybara", "~> 2.5.0"
   s.add_development_dependency "capybara-webkit", "~> 1.7.1"
   s.add_development_dependency "capybara-screenshot", "~> 1.0.11"

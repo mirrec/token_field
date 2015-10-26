@@ -8,7 +8,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(params[:item])
+    @item = Item.new(items_params)
     if @item.save
       redirect_to items_path
     else
@@ -22,10 +22,16 @@ class ItemsController < ApplicationController
 
   def update
     @item = Item.find(params[:id])
-    if @item.update_attributes(params[:item])
+    if @item.update_attributes(items_params)
       redirect_to items_path
     else
       render :edit
     end
+  end
+
+  private
+
+  def items_params
+    params.require(:item).permit(:name, :category_id)
   end
 end
