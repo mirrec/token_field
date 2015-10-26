@@ -5,7 +5,9 @@ form_for helper for token input with jquery token input plugin
 for has_many and belongs_to association
 
 http://railscasts.com/episodes/258-token-fields
+
 http://loopj.com/jquery-tokeninput/
+
 https://github.com/foohey/jquery-tokeninput-rails
 
 helper will render standard text field input with javascript.
