@@ -75,17 +75,17 @@ in routes we have route for token ajax call
 
 ```ruby
 MyApplication::Application.routes.draw do
-   resources :categories do
-     collection do
-       get :token # route for token -> token_categories_path
-     end
-   end
+  resources :categories do
+    collection do
+     get :token # route for token -> token_categories_path
+    end
+  end
 end
 ```
 
 then in view we call token_field with param :model => :category
 
-```ruby
+```erb
 <%= form_for @category do |f| %>
    <%= f.token_field :parent_id, :model => :category, :token_url => token_categories_path %>
 <% end %>
@@ -93,7 +93,7 @@ then in view we call token_field with param :model => :category
 
 in case model is in namespace for example MyApp you should use :model like this
 
-```ruby
+```erb
 <%= form_for @category do |f| %>
    <%= f.token_field :parent_id, :model => "MyApp::Category", :token_url => token_categories_path %>
 <% end %>
@@ -101,7 +101,7 @@ in case model is in namespace for example MyApp you should use :model like this
 
 if you need dynamically evaluated url of token input, you can pass inline javascript function to `:token_url` options but with `:token_url_is_function` set to `true`
 
-```ruby
+```erb
 <%= form_for @category do |f| %>
    <%= f.token_field :parent_id, :model => :category, :token_url => "function(){ return '/hello' }", :token_url_is_function => true %>
 <% end %>
@@ -109,9 +109,9 @@ if you need dynamically evaluated url of token input, you can pass inline javasc
 
 also own separate function are supported
 
-```ruby
+```erb
 <%= form_for @category do |f| %>
-   <%= f.token_field :parent_id, :model => :category, :token_url => "myDynamicUrl", :token_url_is_function => true %>
+  <%= f.token_field :parent_id, :model => :category, :token_url => "myDynamicUrl", :token_url_is_function => true %>
 <% end %>
 
 <script type="text/javascript">
@@ -126,13 +126,13 @@ for example in Product model like this
 
 ```ruby
 class Product < ActiveRecord::Base
-   belongs_to :category
+  belongs_to :category
 end
 ```
 
 we can use this code in view
 
-```ruby
+```erb
 <%= form_for @product do |f| %>
   <%= f.token_field :category_id, :token_url => token_categories_path %>
 <% end %>
@@ -164,15 +164,15 @@ end
 in view you will use attribute category_ids. token input will expected more than one category.
 so you can enter more than one category.
 
-```ruby
+```erb
 <%= form_for @product do |f| %>
-   <%= f.token_field :category_ids, :token_url => token_categories_path %>
+  <%= f.token_field :category_ids, :token_url => token_categories_path %>
 <% end %>
 ```
 
 if you want to use multiple token inputs on page, and id of element would be the same, you can user option :append_to_id.
 
-```ruby
+```erb
 <%= form_for @product do |f| %>
    <%= f.token_field :category_ids, :token_url => token_categories_path, :append_to_id => :id %>
 <% end %>
@@ -183,7 +183,7 @@ if @product.id is nil id of html input will be "product_categories_ids"
 
 other value for :append_id option will be used like this
 
-```ruby
+```erb
 <%= form_for @product do |f| %>
   <%= f.token_field :category_ids, :token_url => token_categories_path, :append_to_id => 5 %>
 <% end %>
@@ -196,7 +196,7 @@ id of html input will be "product_categories_ids_5"
 if you use simple_form in your project, TokenInput field will be loaded.
 you can use it in view like this
 
-```ruby
+```erb
 <%= simple_form_for(@item) do |f| %>
   <%= f.input :category_id, :as => :token, :token_url => token_categories_path %>
 <% end %>
@@ -238,11 +238,12 @@ clear_token "category_parent_id"
 project is covered by integration tests. using rspec, capybara and selenium
 how to run test
 
-    bundle # install dependency
-    rake db:create
-    rake db:migrate RAILS_ENV=test
-    rspec spec/
-
+```bash
+bundle # install dependency
+rake db:create
+rake db:migrate RAILS_ENV=test
+rspec spec/
+```
 
 ## Contributing
 
