@@ -194,6 +194,7 @@ filling token input
 
     fill_in "category_parent_id", :with => new_parent.id # standard input
     fill_in_token "category_parent_id", :with => "wood"
+    fill_in_token "category_parent_id", :with => "wood", :waiting_call => lambda { sleep(4) }
 
 clearing token input
 

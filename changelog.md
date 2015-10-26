@@ -1,4 +1,6 @@
 # 2.0.0 (Not yet released)
+## added
+* `:waiting_call` option to test helper method `fill_in_token`, default is `sleep(1)` call
 ## changed
 * update `capybara` to 2.5 version
 * switch to `capybara-webkit`

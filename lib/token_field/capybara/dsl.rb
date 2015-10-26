@@ -2,8 +2,9 @@ module TokenField
   module Capybara
     module Dsl
       def fill_in_token(id, options)
+        waiting = options.fetch(:waiting_call) { lambda { sleep(1) } }
         fill_in "token-input-#{input_id(id, options)}", options
-        sleep(1)
+        waiting.call
         find(".token-input-dropdown-facebook li").click
       end
 
