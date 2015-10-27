@@ -1,6 +1,8 @@
 # TokenField
 
-This gem add helper for form_for to Ruby on Rails 3.+
+[![Build Status](https://travis-ci.org/mirrec/token_field.svg?branch=master)](https://travis-ci.org/mirrec/token_field)
+
+This gem add helper for form_for to Ruby on Rails 4.2.1+
 form_for helper for token input with jquery token input plugin
 for has_many and belongs_to association
 
