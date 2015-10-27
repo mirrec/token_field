@@ -5,8 +5,6 @@ rvm:
   - 2.2.2
 before_install:
   - rm .rvmrc
-install:
-  - appraisal install
 before_script:
   - bundle exec rake app:db:schema:load
 script:
