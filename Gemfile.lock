@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     token_field (2.0.0)
-      rails (~> 4.2.0)
+      rails (~> 4.2.1)
 
 GEM
   remote: http://rubygems.org/
