@@ -1,4 +1,4 @@
-# 2.0.0 (Not yet released)
+# 2.0.0 (October 27, 2015)
 ## added
 * `:waiting_call` option to test helper method `fill_in_token`, default is `sleep(1)` call
 * supports for `rails` on versions `~> 3.2.1`, `~> 4.0.1`, `~> 4.1.1`, `~> 4.2.1`

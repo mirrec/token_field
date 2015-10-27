@@ -218,14 +218,17 @@ all options for token_field helper can be used in simple form helper as well.
 
 ## Updating from 1.x to 2.0
 
-Add `#to_token` method to model you are using
-Remove `.token_json` method, we don't use it anymore
+* Add `#to_token` method to model you are using
+* Remove `.token_json` method, we don't use it anymore
+* require dsl helper for tests (see below)
 
 ## Testing
 
 add support for helpers in rspec
 
 ```ruby
+require 'token_field/capybara/dsl'
+
 RSpec.configure do |config|
   config.include TokenField::Capybara::Dsl
 end
