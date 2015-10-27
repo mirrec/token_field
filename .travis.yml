@@ -5,12 +5,10 @@ rvm:
   - 2.2.2
 before_install:
   - rm .rvmrc
-install: "bundle install"
 before_script:
-  - bundle exec appraisal install
   - bundle exec rake app:db:schema:load
 script:
-  - "appraisal xvfb-run bundle exec rspec spec/"
+  - "xvfb-run bundle exec rspec spec/"
 
 sudo: false
 gemfile:
