@@ -6,6 +6,6 @@ rvm:
 before_script:
   - bundle exec rake app:db:schema:load
 script:
-  - "bundle exec rspec spec/"
+  - "xvfb-run bundle exec rspec spec/"
 
 sudo: false
