@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/mirrec/token_field.svg?branch=master)](https://travis-ci.org/mirrec/token_field)
 
-This gem add helper for form_for to Ruby on Rails 4.2.1+
+This gem add helper for form_for to Ruby on Rails
 form_for helper for token input with jquery token input plugin
 for has_many and belongs_to association
 
@@ -11,6 +11,12 @@ http://railscasts.com/episodes/258-token-fields
 http://loopj.com/jquery-tokeninput/
 
 https://github.com/foohey/jquery-tokeninput-rails
+
+Supported Ruby on Rails versions:
+* ~> 3.2.1
+* ~> 4.0.1
+* ~> 4.1.1
+* ~> 4.2.1
 
 helper will render standard text field input with javascript.
 javascript will change standard input to token field input

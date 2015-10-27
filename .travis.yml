@@ -3,9 +3,18 @@ cache: bundler
 language: ruby
 rvm:
   - 2.2.2
+before_install:
+  - rm .rvmrc
+install:
+  - appraisal install
 before_script:
   - bundle exec rake app:db:schema:load
 script:
-  - "xvfb-run bundle exec rspec spec/"
+  - "appraisal xvfb-run bundle exec rspec spec/"
 
 sudo: false
+gemfile:
+  - gemfiles/3.2.gemfile
+  - gemfiles/4.0.gemfile
+  - gemfiles/4.1.gemfile
+  - gemfiles/4.2.gemfile

@@ -13,12 +13,13 @@ Gem::Specification.new do |s|
   s.summary     = "Form helper input for jquery token input"
   s.description = "Form helper with how to section for using token input jquery plugin in application"
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
-  s.test_files = Dir["spec/**/*"]
+  s.files       = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
+  s.test_files  = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 4.2.1"
+  s.add_dependency "rails", "> 3.2.1", "< 5.0"
   # s.add_dependency "jquery-rails"
 
+  s.add_development_dependency "appraisal", "~> 2.1.0"
   s.add_development_dependency "sqlite3", "~> 1.3.11"
   s.add_development_dependency "rspec-rails", "~> 3.3.3"
   s.add_development_dependency "factory_girl_rails", "~> 4.1.0"

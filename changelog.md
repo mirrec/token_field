@@ -1,8 +1,10 @@
 # 2.0.0 (Not yet released)
 ## added
 * `:waiting_call` option to test helper method `fill_in_token`, default is `sleep(1)` call
+* supports for `rails` on versions `~> 3.2.1`, `~> 4.0.1`, `~> 4.1.1`, `~> 4.2.1`
+* `appraisal` gem to tests multiple rails versions
 ## changed
-* cahnge to `ruby-2.2.0`
+* change default project `ruby` version to `2.2.0`
 * require `rails` version to `~> 4.2.0`
 * update `capybara` to 2.5 version
 * switch to `capybara-webkit`
