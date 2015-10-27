@@ -6,6 +6,7 @@ rvm:
 before_install:
   - rm .rvmrc
 before_script:
+  - appraisal install
   - bundle exec rake app:db:schema:load
 script:
   - "appraisal xvfb-run bundle exec rspec spec/"
