@@ -1,7 +1,6 @@
 # TokenField
 
 [![Build Status](https://travis-ci.org/mirrec/token_field.svg?branch=master)](https://travis-ci.org/mirrec/token_field)
-
 [![Gem Version](https://badge.fury.io/rb/token_field.svg)](https://badge.fury.io/rb/token_field)
 
 This gem add helper for form_for to Ruby on Rails
